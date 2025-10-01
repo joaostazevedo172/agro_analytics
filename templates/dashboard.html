@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AGRO_ANALYTICS Dashboard</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 30px; background-color: #f4f4f9; color: #333; }
+        .header { background-color: #e8f5e9; padding: 20px; border-radius: 8px; margin-bottom: 25px; border-left: 5px solid #4caf50; }
+        h1 { color: #2e7d32; margin-top: 0; }
+        .container { max-width: 900px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        form label { display: block; margin-top: 15px; font-weight: bold; }
+        form input[type="text"], form input[type="number"] { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        form button { background-color: #4CAF50; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; margin-top: 20px; font-size: 1.1em; }
+        .result-box { border: 2px solid #4caf50; padding: 20px; border-radius: 8px; margin-top: 30px; }
+        
+        /* Estilos para as mensagens Flash */
+        .flash-message { 
+            padding: 10px; 
+            margin-bottom: 15px; 
+            border-radius: 4px; 
+            font-weight: bold;
+            border: 1px solid transparent;
+        }
+        .success { background-color: #d4edda; color: #155724; border-color: #c3e6cb; } /* Verde para Sucesso */
+        .error { background-color: #f8d7da; color: #721c24; border-color: #f5c6cb; } /* Vermelho para Erro */
+        .error-msg { color: #d32f2f; font-weight: bold; margin-bottom: 10px; } /* Usado para exibir 'error' vindo do Flask */
+
+        .status-ALTO_RISCO { color: #d32f2f; font-weight: bold; }
+        .status-ATENÇÃO { color: #ffb300; font-weight: bold; }
+        .status-OK { color: #388e3c; font-weight: bold; }
+
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background-color: #66bb6a; color: white; }
+        
+        .footer-total { margin-top: 20px; font-size: 1.2em; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>AGRO_ANALYTICS: Análise de Produtividade da Cana-de-Açúcar</h1>
+        <p><a href="/">Novo Planejamento</a> | <a href="/dashboard">Visualizar Dados Históricos</a></p>
+    </div>
+
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message {{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+                
+        {% if action == 'form' %}
+            <h2>Simulação e Planejamento Agronômico</h2>
+            {% if error %}
+                <p class="error-msg">ERRO: {{ error }}</p>
+            {% endif %}
+            
+            <form action="/analyze" method="post">
+                <label for="uf">1. UF da Colheita (Ex: SP, AL):</label>
+                <input type="text" id="uf" name="uf" required maxlength="2">
+                
+                <label for="mes">2. Mês de Plantio (1 a 12):</label>
+                <input type="number" id="mes" name="mes" required min="1" max="12">
+                
+                <label for="produtividade">3. Produtividade Esperada (t/ha - Ex: 90.5):</label>
+                <input type="number" step="0.01" id="produtividade" name="produtividade" required>
+                
+                <label for="talhao">4. Identificação do Talhão (Ex: T001):</label>
+                <input type="text" id="talhao" name="talhao" required>
+                
+                <label for="maquina_id">5. ID da Máquina/Colhedora:</label>
+                <input type="text" id="maquina_id" name="maquina_id" required>
+                
+                <button type="submit">EXECUTAR ANÁLISE</button>
+            </form>
+
+        {% elif action == 'result' %}
+            <h2>✅ Análise de Viabilidade (Estimativa de Perdas)</h2>
+
+            <div class="result-box">
+                <p><strong>UF Analisada:</strong> {{ uf }} (Mês {{ mes }})</p>
+                <hr>
+                
+                <h3>Planejamento Agronômico:</h3>
+                <p><strong>Viabilidade da Área:</strong> {{ viabilidade }} - <em>{{ motivo_viabilidade }}</em></p>
+                <p><strong>Época de Plantio:</strong> {{ epoca_status }} - <em>{{ motivo_epoca }}</em></p>
+                <p><strong>Risco de Pragas:</strong> {{ risco_praga }} - <em>{{ recomendacao_praga }}</em></p>
+                <p><strong>Colheita Escalonada:</strong> {{ sugestao_colheita }}</p>
+                <hr>
+
+                <h3>Resultado Financeiro:</h3>
+                <p><strong>Perda Estimada:</strong> {{ perda_estimada_display }}</p>
+                <hr>
+
+                <h3>Explicação sobre a Perda Estimada:</h3>
+                <p>A perda de {{ perda_estimada_display }} t/ha pode ser atribuída a diversos fatores agronômicos, como:</p>
+                <ul>
+                    <li><strong>Época de Plantio:</strong> Plantios fora da janela ideal podem resultar em seca ou geadas, afetando o crescimento das plantas.</li>
+                    <li><strong>Risco de Pragas:</strong> Infestações como a broca da cana podem reduzir a produtividade.</li>
+                    <li><strong>Condições Climáticas:</strong> A falta de chuvas ou o excesso de calor pode prejudicar o desenvolvimento da cana.</li>
+                    <li><strong>Qualidade do Solo:</strong> Solos com baixa fertilidade ou mal manejados podem diminuir a produção de cana.</li>
+                </ul>
+            </div>
+            
+            <form action="/save_to_db" method="post">
+                <input type="hidden" name="uf" value="{{ uf }}">
+                <input type="hidden" name="mes" value="{{ mes }}">
+                <input type="hidden" name="produtividade" value="{{ produtividade }}">
+                <input type="hidden" name="perda_estimada" value="{{ perda_estimada_raw }}">
+                <input type="hidden" name="talhao" value="{{ talhao }}">
+                <input type="hidden" name="maquina_id" value="{{ maquina_id }}">
+                <button type="submit">Salvar no Banco de Dados</button>
+            </form>
+
+            <p style="margin-top: 20px;">
+                <a href="/">Clique aqui para uma nova análise.</a>
+            </p>
+
+        {% elif action == 'dashboard' %}
+            <h2>Visualização de Dados Históricos (Oracle)</h2>
+            <p>Total de Registros Carregados: {{ registros | length }}</p>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Talhão</th>
+                        <th>Máquina</th>
+                        <th>Perda estimada %</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for reg in registros %}
+                    <tr>
+                        <td>{{ reg.id }}</td>
+                        <td>{{ reg.talhao }}</td>
+                        <td>{{ reg.maquina }}</td>
+                        <td>{{ reg.perda_perc }}</td>
+                        <td><span class="status-{{ reg.status.replace(' ', '_') }}">{{ reg.status }}</span></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+        {% endif %}
+    </div>
+</body>
+</html>
