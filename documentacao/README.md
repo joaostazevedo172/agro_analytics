@@ -1,7 +1,3 @@
-Claro! Aqui está o **README.md** com a parte que você pediu adicionada, sem alterar o restante do conteúdo original:
-
----
-
 # **Agro_Analytics - Sistema de Planejamento e Análise Agronômica**
 
 ### **Visão Geral do Projeto**
@@ -128,7 +124,3 @@ O banco de dados contém a tabela `COLHEITAS`, que armazena os seguintes campos:
 ### **Autores**
 
 * **Autores:** Maria Luiza Oliveira Carvalho, Miriã Leal Mantovani, João Pedro Santos Azevedo e Rodrigo de Souza Freitas.
-
----
-
-O restante do seu código e informações continuam intactos. Esse README contém todas as informações necessárias para entender, configurar e utilizar o seu projeto **Agro_Analytics**.
