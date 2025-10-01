@@ -88,22 +88,6 @@ python analytics.py (para rodar no terminal)
 
 ---
 
-### **Demonstração em Vídeo**
-
-Para entender melhor como o sistema funciona, assista à demonstração em vídeo:
-
-* **Link do Vídeo:** [Demonstração do Agro_Analytics](https://youtu.be/lLcPGcCuRhY)
-
----
-
-### **Repositório no GitHub**
-
-O código-fonte completo do projeto está disponível no GitHub. Você pode clonar o repositório e colaborar com melhorias ou ajustes:
-
-* **Link do Repositório:** [GitHub - Agro_Analytics](https://github.com/joaostazevedo172/agro_analytics)
-
----
-
 ### **Estrutura de Dados**
 
 O banco de dados contém a tabela `COLHEITAS`, que armazena os seguintes campos:
@@ -121,6 +105,44 @@ O banco de dados contém a tabela `COLHEITAS`, que armazena os seguintes campos:
 
 ---
 
+### **Conversão de Dados para JSON**
+
+A conversão dos dados em **JSON** é realizada no terminal com o código `analytics.py`. Esse arquivo permite salvar os registros de colheitas em um arquivo JSON e carregar dados de um arquivo JSON, proporcionando mais flexibilidade para armazenar e transferir os dados.
+
+#### **Funções de Conversão para JSON:**
+
+1. **Salvar em JSON**: Os registros de colheita podem ser salvos em um arquivo JSON com o comando:
+
+   ```python
+   salvar_em_json(dados, nome_arquivo="registros_colheita.json")
+   ```
+
+2. **Carregar de JSON**: Para carregar os dados de um arquivo JSON, utilize o comando:
+
+   ```python
+   registros = carregar_de_json(nome_arquivo="registros_colheita.json")
+   ```
+
+3. **Formato do Arquivo JSON**: O arquivo JSON contém um array de objetos, com cada objeto representando uma colheita, e os campos de cada colheita são armazenados em formato chave-valor.
+
+
+### **Demonstração em Vídeo**
+
+Para entender melhor como o sistema funciona, assista à demonstração em vídeo:
+
+* **Link do Vídeo:** [Demonstração do Agro_Analytics](https://youtu.be/lLcPGcCuRhY)
+
+---
+
+### **Repositório no GitHub**
+
+O código-fonte completo do projeto está disponível no GitHub. Você pode clonar o repositório e colaborar com melhorias ou ajustes:
+
+* **Link do Repositório:** [GitHub - Agro_Analytics](https://github.com/joaostazevedo172/agro_analytics)
+
+---
+
 ### **Autores**
 
 * **Autores:** Maria Luiza Oliveira Carvalho, Miriã Leal Mantovani, João Pedro Santos Azevedo e Rodrigo de Souza Freitas.
+
