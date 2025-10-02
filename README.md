@@ -1,4 +1,4 @@
-# **Agro_Analytics - Sistema de Planejamento e Análise Agronômica**
+# **Agro_Analytics - Sistema de Planejamento e Análise Agronômica (Cap 6 - Python e além - FIAP)**
 
 ### **Visão Geral do Projeto**
 
