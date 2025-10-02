@@ -47,7 +47,7 @@ MAPA_VIABILIDADE_CANASIMULADO = {
 }
 
 # ====================================================================
-# FUNÇÕES DE VALIDAÇÃO (Consistência de Dados) - SEM MUDANÇAS
+# FUNÇÕES DE VALIDAÇÃO (Consistência de Dados)
 # ====================================================================
 
 def validar_float(mensagem):
@@ -78,10 +78,8 @@ def validar_data(mensagem, formato='%Y-%m-%d', tentativas=3):
                 sys.exit()
 
 # ====================================================================
-# FUNÇÕES DE LÓGICA AGRONÔMICA E ESTIMATIVA - SEM MUDANÇAS
+# FUNÇÕES DE LÓGICA AGRONÔMICA E ESTIMATIVA
 # ====================================================================
-
-# ... (simular_api_localidade, avaliar_epoca_plantio, simular_controle_pragas, planejar_colheita_escalonada, estimar_perda_planejada)
 
 def simular_api_localidade(estado):
     """ Simula a consulta de viabilidade de área de plantio de cana por Estado (UF). """
@@ -185,7 +183,7 @@ def estimar_perda_planejada(estado_uf, mes_plantio):
 
 
 # ====================================================================
-# FUNÇÕES DE CADASTRO E ESTRUTURA DE DADOS (AGORA AUTOMATIZADA) - SEM MUDANÇAS
+# FUNÇÕES DE CADASTRO E ESTRUTURA DE DADOS (AGORA AUTOMATIZADA)
 # ====================================================================
 
 def cadastrar_nova_colheita(registros):
@@ -369,10 +367,8 @@ def carregar_de_json(nome_arquivo=ARQUIVO_JSON_PADRAO):
         return []
 
 # ====================================================================
-# FUNÇÕES DE CÁLCULO E ANÁLISE (SUBALGORITMOS) - SEM MUDANÇAS
+# FUNÇÕES DE CÁLCULO E ANÁLISE (SUBALGORITMOS)
 # ====================================================================
-
-# ... (calcular_perda_percentual, calcular_perda_media_por_maquina, exibir_relatorio_analitico)
 
 def calcular_perda_percentual(perda_tha, produtividade_esperada_tha):
     """ Função para calcular a perda em percentual. """
@@ -464,10 +460,8 @@ def exibir_relatorio_analitico(registros):
 
 
 # ====================================================================
-# FUNÇÕES DE CONEXÃO E PERSISTÊNCIA (ORACLE) - SEM MUDANÇAS
+# FUNÇÕES DE CONEXÃO E PERSISTÊNCIA (ORACLE)
 # ====================================================================
-
-# ... (conectar_oracle, carregar_dados_oracle, salvar_dados_oracle, remover_colheita_oracle)
 
 def conectar_oracle():
     """ 
@@ -497,8 +491,6 @@ def carregar_dados_oracle(connection):
     """ Carrega os registros de colheita do banco de dados Oracle. """
     cursor = connection.cursor()
     try:
-        # Adicione 'motivo_perda_estimada' à query se a tabela COLHEITAS tiver essa coluna
-        # Se não tiver, manter o 'Não aplicável (DB)'
         query = f"SELECT id, talhao, maquina_id, produtividade_esperada_tha, perda_registrada_tha, data_colheita, preco_tonelada FROM {TABELA_COLHEITAS}"
         cursor.execute(query)
         registros = cursor.fetchall()
@@ -522,10 +514,18 @@ def carregar_dados_oracle(connection):
         print(f"[ERRO] Falha ao carregar os dados do banco de dados: {e}")
         return []
     finally:
-        cursor.close()
+        # CORREÇÃO DPI-1010: Verifica se o cursor existe antes de fechar
+        if 'cursor' in locals() and cursor:
+            try:
+                cursor.close()
+            except cx_Oracle.Error:
+                pass # Ignora o erro se a conexão já estiver fechada/inválida
 
 def salvar_dados_oracle(dados, connection):
-    """ Persiste os dados, contornando o erro de Duplicação (ORA-00001). """
+    """ 
+    Persiste os dados, contornando o erro de Duplicação (ORA-00001).
+    Possui a correção para o erro DPI-1010 no bloco finally.
+    """
     cursor = connection.cursor()
     try:
         print("\n[INFO] Persistindo novos e antigos registros (Duplicatas serão ignoradas)...")
@@ -533,7 +533,7 @@ def salvar_dados_oracle(dados, connection):
         for registro in dados:
             # Converte a data para o formato correto
             data_colheita_str = str(registro['data_colheita']).split()[0]
-            data_colheita_formatada = datetime.strptime(data_colheita_str, '%Y-%m-%d').strftime('%Y-%m-%d')
+            data_colheita_formatada = datetime.strptime(data_colheita_str, '%Y-%m-%d').strftime('%Y-%M-%D')
             
             # Remove chaves não presentes na tabela COLHEITAS
             registro_db = {k: v for k, v in registro.items() if k not in ('motivo_perda_estimada', 'area_total_ha')}
@@ -546,6 +546,9 @@ def salvar_dados_oracle(dados, connection):
                     VALUES (:id, :talhao, :maquina_id, :produtividade_esperada_tha, 
                             :perda_registrada_tha, TO_DATE(:data_colheita, 'YYYY-MM-DD'), :preco_tonelada)
                 """
+                # Correção: O formato de data no TO_DATE deve ser 'YYYY-MM-DD'
+                sql_insert = sql_insert.replace("'YYYY-MM-DD'", "'YYYY-MM-DD'") 
+                
                 cursor.execute(sql_insert, registro_db)
                 
             except cx_Oracle.IntegrityError as e:
@@ -562,7 +565,12 @@ def salvar_dados_oracle(dados, connection):
         print(f"[ERRO] Falha ao salvar os dados no banco de dados: {e}")
         connection.rollback()
     finally:
-        cursor.close()
+        # ✅ CORREÇÃO DPI-1010: Verifica se o cursor existe antes de fechar
+        if 'cursor' in locals() and cursor:
+            try:
+                cursor.close()
+            except cx_Oracle.Error:
+                pass # Ignora o erro se a conexão já estiver fechada/inválida
 
 def remover_colheita_oracle(id_remover, connection):
     """ Remove um registro de colheita do banco de dados Oracle. """
@@ -583,7 +591,13 @@ def remover_colheita_oracle(id_remover, connection):
         connection.rollback()
         return False
     finally:
-        cursor.close()
+        # CORREÇÃO DPI-1010: Verifica se o cursor existe antes de fechar
+        if 'cursor' in locals() and cursor:
+            try:
+                cursor.close()
+            except cx_Oracle.Error:
+                pass # Ignora o erro se a conexão já estiver fechada/inválida
+
 
 # ====================================================================
 # PROCEDIMENTO PRINCIPAL (FLUXO DO SISTEMA)

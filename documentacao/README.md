@@ -1,16 +1,10 @@
-Claro! Aqui está o **README.md** com a parte que você pediu adicionada, sem alterar o restante do conteúdo original:
-
----
-
-# **Agro_Analytics - Sistema de Planejamento e Análise Agronômica**
+# **Agro_Analytics - Sistema de Planejamento e Análise Agronômica (Cap 6 - Python e além)**
 
 ### **Visão Geral do Projeto**
 
 O **Agro_Analytics** é um sistema desenvolvido para realizar análise agronômica e planejamento de colheitas, focado na cultura da Cana-de-Açúcar. Através de uma interface simples e intuitiva, o sistema permite realizar simulações sobre viabilidade de plantio, riscos de pragas, períodos ideais para plantio e estimativas de perdas na produção. O sistema também se integra com o banco de dados Oracle para persistência de dados, permitindo o gerenciamento eficiente de registros históricos de colheita.
 
 O principal objetivo é fornecer um planejamento detalhado e inteligente para maximizar a produtividade e minimizar perdas no processo agrícola.
-
----
 
 ### **Componentes Principais do Sistema**
 
@@ -51,9 +45,6 @@ Agro_Analytics/
 ├──analytics.py
 ├──app.py
 
-```
-
----
 
 ### **Como Usar o Projeto**
 
@@ -90,23 +81,6 @@ python analytics.py (para rodar no terminal)
 * **Análise de Viabilidade**: O sistema fornecerá uma análise sobre a viabilidade do plantio, época de plantio ideal, e risco de pragas.
 * **Relatórios**: Visualize relatórios analíticos sobre as perdas e status das máquinas e talhões.
 
----
-
-### **Demonstração em Vídeo**
-
-Para entender melhor como o sistema funciona, assista à demonstração em vídeo:
-
-* **Link do Vídeo:** [Demonstração do Agro_Analytics](https://youtu.be/lLcPGcCuRhY)
-
----
-
-### **Repositório no GitHub**
-
-O código-fonte completo do projeto está disponível no GitHub. Você pode clonar o repositório e colaborar com melhorias ou ajustes:
-
-* **Link do Repositório:** [GitHub - Agro_Analytics](https://github.com/joaostazevedo172/agro_analytics)
-
----
 
 ### **Estrutura de Dados**
 
@@ -123,12 +97,43 @@ O banco de dados contém a tabela `COLHEITAS`, que armazena os seguintes campos:
 * `PRECO_TONELADA`: Preço da tonelada de cana.
 * `AREA_TOTAL_HA`: Área total em hectares (opcional).
 
----
+
+### **Conversão de Dados para JSON**
+
+A conversão dos dados em **JSON** é realizada no terminal com o código `analytics.py`. Esse arquivo permite salvar os registros de colheitas em um arquivo JSON e carregar dados de um arquivo JSON, proporcionando mais flexibilidade para armazenar e transferir os dados.
+
+#### **Funções de Conversão para JSON:**
+
+1. **Salvar em JSON**: Os registros de colheita podem ser salvos em um arquivo JSON com o comando:
+
+   ```python
+   salvar_em_json(dados, nome_arquivo="registros_colheita.json")
+   ```
+
+2. **Carregar de JSON**: Para carregar os dados de um arquivo JSON, utilize o comando:
+
+   ```python
+   registros = carregar_de_json(nome_arquivo="registros_colheita.json")
+   ```
+
+3. **Formato do Arquivo JSON**: O arquivo JSON contém um array de objetos, com cada objeto representando uma colheita, e os campos de cada colheita são armazenados em formato chave-valor.
+
+
+### **Demonstração em Vídeo**
+
+Para entender melhor como o sistema funciona, assista à demonstração em vídeo:
+
+* **Link do Vídeo:** [Demonstração do Agro_Analytics](https://www.youtube.com/watch?v=5ZzWfqERmik)
+
+
+### **Repositório no GitHub**
+
+O código-fonte completo do projeto está disponível no GitHub. Você pode clonar o repositório e colaborar com melhorias ou ajustes:
+
+* **Link do Repositório:** [GitHub - Agro_Analytics](https://github.com/joaostazevedo172/agro_analytics)
+
 
 ### **Autores**
 
 * **Autores:** Maria Luiza Oliveira Carvalho, Miriã Leal Mantovani, João Pedro Santos Azevedo e Rodrigo de Souza Freitas.
 
----
-
-O restante do seu código e informações continuam intactos. Esse README contém todas as informações necessárias para entender, configurar e utilizar o seu projeto **Agro_Analytics**.
