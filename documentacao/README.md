@@ -130,7 +130,7 @@ A conversão dos dados em **JSON** é realizada no terminal com o código `analy
 
 Para entender melhor como o sistema funciona, assista à demonstração em vídeo:
 
-* **Link do Vídeo:** [Demonstração do Agro_Analytics](https://youtu.be/lLcPGcCuRhY)
+* **Link do Vídeo:** [Demonstração do Agro_Analytics](https://www.youtube.com/watch?v=5ZzWfqERmik)
 
 ---
 
