@@ -1,4 +1,16 @@
-# **Agro_Analytics - Sistema de Planejamento e Análise Agronômica (Cap 6 - Python e além - FIAP)**
+# FIAP - Faculdade de Informática e Administração Paulista
+
+<p align="center">
+<a href= "https://www.fiap.com.br/"><img src="https://th.bing.com/th/id/OIP.3xs_MSeNC0T1UOrJaCEqWAHaEK?w=298&h=180&c=7&r=0&o=7&cb=12&dpr=1.3&pid=1.7&rm=3" alt="FIAP - Faculdade de Informática e Admnistração Paulista" border="0" width=40% height=40%></a>
+</p>
+
+<br>
+
+# Projeto - Fase 2, Cap. 6: "Agro_Analytics - Sistema de Planejamento e Análise Agronômica"
+
+### Contribuição
+- **Autores:** Maria Luiza Oliveira Carvalho, Miriã Leal Mantovani, João Pedro Santos Azevedo e Rodrigo de Souza Freitas.
+- **Tutora:** Sabrina Otoni
 
 ### **Visão Geral do Projeto**
 
@@ -145,4 +157,5 @@ O código-fonte completo do projeto está disponível no GitHub. Você pode clon
 ### **Autores**
 
 * **Autores:** Maria Luiza Oliveira Carvalho, Miriã Leal Mantovani, João Pedro Santos Azevedo e Rodrigo de Souza Freitas.
+- **Tutora:** Sabrina Otoni
 
