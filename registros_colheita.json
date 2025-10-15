@@ -1,0 +1,52 @@
+[
+    {
+        "id": 1,
+        "talhao": "p0",
+        "maquina_id": "l8",
+        "produtividade_esperada_tha": 98.0,
+        "perda_registrada_tha": 5.0,
+        "data_colheita": "2025-09-30",
+        "preco_tonelada": 130.0,
+        "motivo_perda_estimada": "Não aplicável (DB)"
+    },
+    {
+        "id": 3,
+        "talhao": "T5",
+        "maquina_id": "C5",
+        "produtividade_esperada_tha": 90.0,
+        "perda_registrada_tha": 8.0,
+        "data_colheita": "2025-10-01",
+        "preco_tonelada": 130.0,
+        "motivo_perda_estimada": "Não aplicável (DB)"
+    },
+    {
+        "id": 4,
+        "talhao": "T01",
+        "maquina_id": "C01",
+        "produtividade_esperada_tha": 80.0,
+        "perda_registrada_tha": 8.0,
+        "data_colheita": "2025-10-01",
+        "preco_tonelada": 130.0,
+        "motivo_perda_estimada": "Não aplicável (DB)"
+    },
+    {
+        "id": 5,
+        "talhao": "T008",
+        "maquina_id": "74",
+        "produtividade_esperada_tha": 23.0,
+        "perda_registrada_tha": 5.0,
+        "data_colheita": "2025-10-13",
+        "preco_tonelada": 130.0,
+        "motivo_perda_estimada": "Condições ideais de plantio."
+    },
+    {
+        "id": 6,
+        "talhao": "T009",
+        "maquina_id": "1",
+        "produtividade_esperada_tha": 47.0,
+        "perda_registrada_tha": 9.0,
+        "data_colheita": "2025-10-13",
+        "preco_tonelada": 130.0,
+        "motivo_perda_estimada": "Viabilidade da área baixa."
+    }
+]
