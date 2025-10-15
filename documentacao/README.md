@@ -154,4 +154,8 @@ O código-fonte completo do projeto está disponível no GitHub. Você pode clon
 
 ---
 
+### **Autores**
+
+* **Autores:** Maria Luiza Oliveira Carvalho, Miriã Leal Mantovani, João Pedro Santos Azevedo e Rodrigo de Souza Freitas.
+- **Tutora:** Sabrina Otoni
 
